@@ -1,0 +1,54 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//FR" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="fr">
+    <head>
+        <title>DragonProxy help</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+        <link rel="stylesheet" href="http://goodybag.github.io/bootstrap-notify/css/bootstrap-notify.css"/>
+    </head>
+    <body>
+        <div class="notifications top-right"></div>
+        <div class="container-fluid">
+            <div class="row-fluid">
+                <div class="col-md-6 col-md-offset-3">
+                    <h1>Dragonnet CSL <small>help</small></h1>
+                    <h2><small>Central Login System</small></h2>
+                    <hr>
+                    <h3>What is DragonProxy ?</h3>
+                    <p>DragonProxy is a software placed between a Minecraft Bedrock client and a Java Minecraft server.</p>
+                    <p>You can read more on the Github page <a href="https://github.com/DragonetMC/DragonProxy">here</a> or the SpigotMC page <a href="https://www.spigotmc.org/resources/%E3%80%90dragonproxy%E3%80%91-%E2%80%94%E2%80%94-join-any-pc-server-using-mcpe-mcwin10.49610/">here</a>.</p>
+                    <hr>
+                    <h3>Why entering my Mojang credentials ?</h3>
+                    <p>You have been requested to enter your Mojang account name and password to link it to your XBoxLive account.</p>
+                    <p>You must link your accounts if you want to join online mode Java Minecraft servers.</p>
+                    <p>You can disable password saving in our databases by not checking the form "save my password" checkbox, that will deliver a "one time use" Mojang token,
+                        if the token is invalidated by logging on another place, you will be asked to do another time the operation.</p>
+                    <hr>
+                    <h3>How it works ?</h3>
+                    <p>1 - On your first connecting on a CLS enabled DragonProxy server, your <span title="XUID, identity and displayName">Xbox Live Minecraft public profile</span> is stored in our server, a PIN code is generated, it's valid for 5 minutes.</p>
+                    <p>2 - You are asked to enter this PIN code on the <a href="/link.html">register page</a>.</p>
+                    <p>3 - If the PIN code is valid, the register page will display your Xbox Live Minecraft display name</p>
+                    <p>4 - You need now to enter your Minecraft username and password, then choose if you want to save it on the CLS database.</p>
+                    <p>5 - The CLS server will login your account to generate a new access token.</p>
+                    <p>6 - You can login again on DragonProxy with you Minecraft (W10/PE) account, it will contact CLS server to authenticate you on the targeted Java Miencraft server.</p>
+                    <p>Each time you login on a CLS enabled DragonProxy server, your token will be checked like the Minecraft launcher does, it's the same process.</p>
+                    <hr>
+                    <h3>Is my Mojang password secured ?</h3>
+                    <p>Paswords saved in our database are ciphered with a complex character chain, and the database itself is secured by multiple layers, stored in a safe place.</p>
+                    <p>At the time of writing this, I consider storing password is unsafe as the engine is in early alpha, untested in production.</p>
+                    <hr>
+                    <h3>Can I unlink my accounts ?</h3>
+                    <p>Yes of course, when linking, we have displayed you an "unregister link", just click it and we instantaneously forget your Mojang account datas, including tokens.</p>
+                    <del><p>If you don't have the unlink account link, You can also unlink your account by logging your Mojang Minecraft account on the <a href="/unlink.html">unlink page</a>.</p></del>
+                    <del><p>You can also connect on a a CLS enabled DragonProxy server and type "/cls unlink".</p></del>
+                    <hr>
+                    <h3>Affiliation</h3>
+                    <p>We are not associated with Mojang or Microsoft and we don't pretend use to be them.</p>
+                </div>
+            </div>
+        </div>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    </body>
+</html>

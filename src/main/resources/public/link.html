@@ -1,0 +1,154 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//FR" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="fr">
+    <head>
+        <title>DragonProxy link</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+        <link rel="stylesheet" href="http://goodybag.github.io/bootstrap-notify/css/bootstrap-notify.css"/>
+    </head>
+    <body>
+        <div class="notifications top-right"></div>
+        <div class="container-fluid">
+            <div class="row-fluid">
+                <div class="col-md-4 col-md-offset-4">
+                    <h1>Dragonnet CSL <small>link</small></h1>
+                    <div id="error" class="hidden">
+                        <div class="alert alert-danger alert-dismissible" role="alert">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <span id="message"></span>
+                        </div>
+                    </div>
+                    <div id="success" class="hidden">
+                        <div class="alert alert-success alert-dismissible" role="alert">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <span id="message"></span>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="form-group">
+                        <label for="xbxlname">Minecraft Xbox Live display name</label>
+                        <input type="text" class="form-control" id="xbxlname" placeholder="">
+                    </div>
+                    <div class="form-group">
+                        <label for="mjngmail">Email Address or Username : <a href="https://help.mojang.com/customer/portal/articles/1233873?ref=launcher" title="Do I log in with my email or username?"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span></a></label>
+                        <input type="text" class="form-control" id="mjnguser" placeholder="">
+                    </div>
+                    <div class="form-group">
+                        <label for="mjngpass">Password : <a href="https://help.mojang.com/customer/portal/articles/329524-change-or-forgot-password?ref=launcher" title="Change or forgot password"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span></a></label>
+                        <input type="password" class="form-control" id="mjngpass" placeholder="">
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email (optional) : <a href="/help.html#mail" title="Hey why do you need my email? It's for sending you the unlink link =)"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span></a></label>
+                        <input type="email" class="form-control" id="email" placeholder="">
+                    </div>
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" id="savePass"> Save my password in case of token reset <a href="/help.html#PasswordSave" title="Password saving Help"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span></a>
+                        </label>
+                    </div>
+                    <hr>
+                    <a href="/help.html" class="btn btn-warning pull-left" title="General Help">Need help</a>
+                    <button type="submit" class="btn btn-default pull-right" id="link_accounts">Link accounts</button>
+                </div>
+            </div>
+        </div>
+        <!-- Modal -->
+        <div class="modal fade" id="pin_modal" tabindex="-1" data-backdrop="static" data-keyboard="false" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="myModalLabel">Enter your PIN code</h4>
+                    </div>
+                    <form method="get">
+                        <div class="modal-body">
+                            <div class="input-group">
+                                <span class="input-group-addon" id="basic-addon1">PIN</span>
+                                <input type="text" class="form-control" name="pin" placeholder="0000" aria-describedby="basic-addon1">
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <!--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
+                            <a href="/help.html#PIN" class="btn btn-warning pull-left" title="How to get a PIN code">How to get a PIN code?</a>
+                            <button type="submit" value="Submit" class="btn btn-primary pull-right">OK</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+        <script src="http://goodybag.github.io/bootstrap-notify/js/bootstrap-notify.js"></script>
+        <script>
+            function $_GET(param) {
+                var vars = {};
+                window.location.href.replace(location.hash, '').replace(/[?&]+([^=&]+)=?([^&]*)?/gi, function (m, key, value) {
+                    vars[key] = value !== undefined ? value : '';
+                });
+                if (param)
+                    return vars[param] ? vars[param] : null;
+                return vars;
+            }
+            $(document).ready(function () {
+                console.log("ready!");
+
+                var get_params = $_GET();
+                //console.log(JSON.stringify(get_params));
+                if (get_params.pin) {
+                    console.log("fetch pin");
+                    //get data from api
+                    $.ajax({
+                        url: '/api/v1/pin',
+                        type: 'GET',
+                        contentType: 'application/json',
+                        data: get_params,
+                        success: function (data) {
+                            if (data.error) {
+                                console.log(data.error);
+                                $('#error #message').html(data.error + " <a href='link.html'>retry ?</a>");
+                                $('#error').removeClass("hidden");
+                                $('#xbxlname').attr("disabled", "true");
+                                $('#mjnguser').attr("disabled", "true");
+                                $('#mjngpass').attr("disabled", "true");
+                                $('#savePass').attr("disabled", "true");
+                                $('#link_accounts').attr("disabled", "true");
+                            } else {
+                                $('#xbxlname').val(data.xbxlname);
+                                $('#xbxlname').attr("disabled", "true");
+                            }
+                        }
+                    });
+                } else {
+                    $('#pin_modal').modal('show');
+                }
+                $('#link_accounts').click(function () {
+                    var username = $('#mjnguser').val();
+                    var password = $('#mjngpass').val();
+                    var savePass = $('#savePass').attr("checked");
+                    var xbxlname = $('#xbxlname').val();
+                    var email = $('#email').val();
+                    var pin = get_params.pin;
+                    $.ajax({
+                        url: '/api/v1/link',
+                        type: 'POST',
+                        contentType: 'application/json',
+                        data: JSON.stringify({pin: pin, xbxlname: xbxlname, user: username, pass: password, save: savePass, email: email}),
+                        success: function (data) {
+                            if (data.error) {
+                                console.log(data.error);
+                                $('#error #message').html(data.error + " <a href='link.html'>retry ?</a>");
+                                $('#error').removeClass("hidden");
+                                $('#success').addClass("hidden");
+                            } else {
+                                $('#error').addClass("hidden");
+                                $('#success #message').html(data.success + " <a href='unlink.html?token=" + data.unlink_token +  "'>Click here to unlink</a>");
+                                $('#success').removeClass("hidden");
+                                console.log(JSON.stringify(data));
+                            }
+                        }
+                    });
+                });
+            });
+        </script>
+    </body>
+</html>

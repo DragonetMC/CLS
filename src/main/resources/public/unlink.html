@@ -1,0 +1,112 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//FR" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="fr">
+    <head>
+        <title>DragonProxy unlink</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+        <link rel="stylesheet" href="http://goodybag.github.io/bootstrap-notify/css/bootstrap-notify.css"/>
+    </head>
+    <body>
+        <div class="notifications top-right"></div>
+        <div class="container-fluid">
+            <div class="row-fluid">
+                <div class="col-md-4 col-md-offset-4">
+                    <h1>Dragonnet CSL <small>unlink</small></h1>
+                    <div id="error" class="hidden">
+                        <div class="alert alert-danger alert-dismissible" role="alert">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <span id="message"></span>
+                        </div>
+                    </div>
+                    <div id="success" class="hidden">
+                        <div class="alert alert-success alert-dismissible" role="alert">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <span id="message"></span>
+                        </div>
+                    </div>
+                    <hr>
+                    <div id ="form">
+                        <div class="form-group">
+                            <label for="mjngmail">Email Address or Username : <a href="https://help.mojang.com/customer/portal/articles/1233873?ref=launcher" title="Do I log in with my email or username?"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span></a></label>
+                            <input type="email" class="form-control" id="mjnguser" placeholder="">
+                        </div>
+                        <div class="form-group">
+                            <label for="mjngpass">Password : <a href="https://help.mojang.com/customer/portal/articles/329524-change-or-forgot-password?ref=launcher" title="Change or forgot password"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span></a></label>
+                            <input type="password" class="form-control" id="mjngpass" placeholder="">
+                        </div>
+                        <hr>
+                        <a href="/help.html" class="btn btn-warning pull-left" title="General Help">Need help</a>
+                        <button type="submit" class="btn btn-default pull-right" id="unlink_accounts">Unlink accounts</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+        <script src="http://goodybag.github.io/bootstrap-notify/js/bootstrap-notify.js"></script>
+        <script>
+            function $_GET(param) {
+                var vars = {};
+                window.location.href.replace(location.hash, '').replace(/[?&]+([^=&]+)=?([^&]*)?/gi, function (m, key, value) {
+                    vars[key] = value !== undefined ? value : '';
+                });
+                if (param)
+                    return vars[param] ? vars[param] : null;
+                return vars;
+            }
+            $(document).ready(function () {
+                console.log("ready!");
+
+                var get_params = $_GET();
+                //console.log(JSON.stringify(get_params));
+                if (get_params.token) {
+                    //get data from api
+                    $.ajax({
+                        url: '/api/v1/unlink',
+                        type: 'GET',
+                        contentType: 'application/json',
+                        data: get_params,
+                        success: function (data) {
+                            if (data.error) {
+                                console.log(data.error);
+                                $('#error #message').html(data.error + " <a href='unlink.html'>retry ?</a>");
+                                $('#error').removeClass("hidden");
+                            } else {
+                                $('#success #message').html(data.success);
+                                $('#success').removeClass("hidden");
+                                $('#form').addClass("hidden");
+                            }
+                        }
+                    });
+                } else {
+                    $('#pin_modal').modal('show');
+                }
+                $('#unlink_accounts').click(function () {
+                    var username = $('#mjnguser').val();
+                    var password = $('#mjngpass').val();
+                    $.ajax({
+                        url: '/api/v1/unlink',
+                        type: 'POST',
+                        contentType: 'application/json',
+                        data: JSON.stringify({user: username, pass: password}),
+                        success: function (data) {
+                            if (data.error) {
+                                console.log(data.error);
+                                $('#error #message').html(data.error + " <a href='link.html'>retry ?</a>");
+                                $('#error').removeClass("hidden");
+                                $('#success').addClass("hidden");
+                            } else {
+                                $('#error').addClass("hidden");
+                                $('#form').addClass("hidden");
+                                $('#success #message').html(data.success);
+                                $('#success').removeClass("hidden");
+                                console.log(JSON.stringify(data));
+                            }
+                        }
+                    });
+                });
+            });
+        </script>
+    </body>
+</html>
