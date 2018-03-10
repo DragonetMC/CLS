@@ -10,7 +10,7 @@
  *
  * @author The Dragonet Team
  */
-package org.dragonet.cls;
+package org.dragonet.cls.repository;
 
 import org.dragonet.cls.entities.User;
 import org.springframework.data.jpa.repository.JpaRepository;

@@ -1,0 +1,7 @@
+git clone https://github.com/certbot/certbot
+cd certbot
+./certbot-auto certonly -a standalone -d dragonet.org -d auth.dragonet.org
+
+openssl pkcs12 -export -in fullchain.pem -inkey privkey.pem -out keystore.p12 -name cls -CAfile chain.pem -caname root
+# every 90 days
+sudo ./certbot-auto renew

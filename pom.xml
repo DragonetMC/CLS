@@ -22,7 +22,7 @@
     <repositories>
         <repository>
             <id>codemc-releases</id>
-            <url>https://repo.codemc.org/repository/maven-releases/</url>
+            <url>https://repo.codemc.org/repository/maven-snapshots/</url>
         </repository>
     </repositories>
 
@@ -31,25 +31,21 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
-            <version>1.5.10.RELEASE</version>
         </dependency>
         <!-- JPA Data (We are going to use Repositories, Entities, Hibernate, etc...) -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
-            <version>1.5.10.RELEASE</version>
         </dependency>
         <!-- Use MySQL Connector-J -->
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
-            <version>8.0.9-rc</version>
         </dependency>
         <!-- Jackson -->
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
-            <version>2.7.5</version>
         </dependency>
         <!-- MInecraft Java Auth -->
         <dependency>
@@ -64,14 +60,15 @@
             <type>jar</type>
         </dependency>
         <dependency>
-            <groupId>org.eclipse.persistence</groupId>
-            <artifactId>eclipselink</artifactId>
-            <version>2.5.2</version>
-        </dependency>
-        <dependency>
             <groupId>javax.mail</groupId>
             <artifactId>mail</artifactId>
             <version>1.4.5</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>2.5</version>
+            <type>jar</type>
         </dependency>
     </dependencies>
 
@@ -80,7 +77,6 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-                <version>1.5.10.RELEASE</version>
             </plugin>
         </plugins>
     </build>

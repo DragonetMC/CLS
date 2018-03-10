@@ -14,23 +14,36 @@ package org.dragonet.cls.utils;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Files;
 import java.security.KeyFactory;
 import java.security.NoSuchAlgorithmException;
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
+import org.springframework.stereotype.Component;
 
 /**
  *
  * @author Epic
  */
+@Component
 public class JTWValidator {
 
     private final String mojangPubliKey;
     private final KeyFactory ellipticCurveKeyFactory;
 
-    public JTWValidator() throws IOException, NoSuchAlgorithmException {
+    public JTWValidator() throws NullPointerException, IOException, NoSuchAlgorithmException {
         //load the mojang public key
-        ClassLoader classLoader = JTWValidator.class.getClassLoader();
-        File file = new File(classLoader.getResource("mojang_root_public.key").getFile());
+        Resource res = new ClassPathResource("/mojang_root_public.key", this.getClass());
+        InputStream inputStream = res.getInputStream();
+        File file = File.createTempFile("mojang_root_public", ".key");
+        try {
+            FileUtils.copyInputStreamToFile(inputStream, file);
+        } finally {
+            IOUtils.closeQuietly(inputStream);
+        }
 
         //Read File Content
         String content = new String(Files.readAllBytes(file.toPath()));
