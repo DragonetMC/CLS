@@ -15,4 +15,4 @@ RUN cp /opt/app/target/*.jar /opt/app/src/app.jar
 # local application port
 EXPOSE 8080
 
-CMD ["java", "-Djava.security.egd=file:/dev/./urandom", "-jar", "/opt/app/src/app.jar"]
+CMD ["java", "-Djava.security.egd=file:/dev/./urandom", "-Dspring.profiles.active=container", "-jar", "/opt/app/src/app.jar"]
